@@ -1,2 +1,19 @@
-title: Blog
+title: Tech Blog
 theme: PaperMod
+languageCode: pl-PL
+
+params:
+  description: "Mój techniczny blog"
+  defaultTheme: auto
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowPageNums: true
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
