@@ -24,6 +24,7 @@ params:
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: true
   ShowPageNums: true
+  comments: true
 
 markup:
   goldmark:
