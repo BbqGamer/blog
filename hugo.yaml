@@ -2,6 +2,17 @@ title: Tech Blog
 theme: PaperMod
 languageCode: pl-PL
 
+menu:
+  main:
+    - name: Search
+      url: search/
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
 params:
   description: "Mój techniczny blog"
   defaultTheme: auto
