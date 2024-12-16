@@ -1,12 +1,13 @@
 on:
   push:
     branches:
-      - main # Set a branch to deploy
-  pull_request:
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-22.04
+    environment: ssh
+
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
