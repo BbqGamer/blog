@@ -22,7 +22,7 @@ ssh-keyscan 127.0.0.1
 ```
 Copy the entry containing RSA key to secret `SSH_KNOWN_HOSTS` in your repository.
 
-4. `REMOTE_SSH_HOST` - remote ssh server address
-5. `REMOTE_SSH_PORT` - remote ssh server port
-6. `REMOTE_DIR` - directory containing the static file of the website
+4. `REMOTE_SSH_HOST` - remote ssh server address.
+5. `REMOTE_SSH_PORT` - remote ssh server port.
+6. `REMOTE_DIR` - directory containing the static file of the website.
 
