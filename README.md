@@ -2,7 +2,8 @@
 [Link to the webpage](https://korba.online)
 
 # Github actions setup
-For automatic deployment you need to setup secrets in your repository.
+For automatic deployment you need to setup secrets in your repository. We will add all
+secrets inside environment called `ssh`.
 ## SSH Key setup
 1. Generate ssh keypair
 ```bash
