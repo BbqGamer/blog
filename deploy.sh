@@ -13,5 +13,9 @@ if [ -z "$REMOTE_DIR" ]; then
 fi
 
 hugo
-rsync -avz --delete public/ $REMOTE_SSH_HOST:$REMOTE_DIR
 
+if [ -z "$REMOTE_SSH_PORT" ]; then
+    rsync -avz --delete public/ $REMOTE_SSH_HOST:$REMOTE_DIR
+else
+    rsync -avze "ssh -p $REMOTE_SSH_PORT" --delete public/ $REMOTE_SSH_HOST:$REMOTE_DIR
+fi
