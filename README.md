@@ -19,7 +19,7 @@ ssh-copy-id -i path_to_pubkey user@remote.com -p port
 
 3. Enter the remote server and run:
 ```bash
-ssh-keyscan 127.0.0.1
+ssh-keyscan -p port srvXX.mikr.us
 ```
 Copy the entry containing RSA key to secret `SSH_KNOWN_HOSTS` in your repository.
 
