@@ -2,7 +2,13 @@ on:
   push:
     branches:
       - master
-
+    paths:
+      - 'archetypes/**'
+      - 'content/**'
+      - 'layouts/**'
+      - 'themes/**'
+      - 'hugo.yaml'
+      
 jobs:
   deploy:
     runs-on: ubuntu-22.04
