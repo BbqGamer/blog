@@ -26,6 +26,11 @@ params:
   ShowPageNums: true
   comments: true
 
+  socialIcons:
+    - name: github
+      title: GitHub
+      url: "https://github.com/BbqGamer"
+
 markup:
   goldmark:
     renderer:
