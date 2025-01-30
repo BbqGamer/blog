@@ -12,6 +12,9 @@ easy to reproduce.
 I have an old laptop, a thinkpad T470s that I bought second-hand on olx.
 I don't use it anymore but the time has come to bring new life into it.
 
+## Wake On LAN
+In order to be able to power on server remotely Wake On LAN (WOL) can be used. First you need to enable WOL in the BIOS (in my case: Config->Network->Wake On LaAN->AC Only, and I also enabled WOL from Dock). Now booting the server if it was shut down is as easy as sending a magic packet as a UDP broadcast with MAC address of the destination server's NIC. There is a helper script in debian repository just install the package and run `wakeonlan [MAC ADDRESS]` from any device in the network to boot the server.
+
 # Main OS
 There are multiple options when it comes to choosing the root OS, one of the best options
 would be to use **Proxmox**, which delivers a all-in-one solution for virtualization, 
@@ -30,6 +33,15 @@ device to be the USB
 4. Install debian according to the instructions in the installer
 - I won't perform full disk encryption just to setup Wake on LAN later.
 - When selecting software to install I only selected `SSH server`.
+
+## Network setup
+We won't be using DHCP as server is something that should have a static IP, let's first
+reserve some IP in my home "router" settings, and then run some commands on the server:
+```bash
+sudo ip link set enp0s... up
+sudo ip addr add dev enp0s... [RESERVED_IP]/24
+sudo ip route add default via [RESERVED_IP] dev enp0s...
+```
 
 ## Debloating
 I will create an ansible script to debloat the debian installation by removing unnecessary
