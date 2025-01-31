@@ -13,7 +13,7 @@ I have an old laptop, a thinkpad T470s that I bought second-hand on olx.
 I don't use it anymore but the time has come to bring new life into it.
 
 ## Wake On LAN
-In order to be able to power on server remotely Wake On LAN (WOL) can be used. First you need to enable WOL in the BIOS (in my case: Config->Network->Wake On LaAN->AC Only, and I also enabled WOL from Dock). Now booting the server if it was shut down is as easy as sending a magic packet as a UDP broadcast with MAC address of the destination server's NIC. There is a helper script in debian repository just install the package and run `wakeonlan [MAC ADDRESS]` from any device in the network to boot the server.
+In order to be able to power on server remotely Wake On LAN (WOL) can be used. First you need to enable WOL in the BIOS (in my case: Config->Network->Wake On LaAN->AC Only, and I also enabled WOL from Dock). Now booting the server if it was shut down is as easy as sending a magic packet as a UDP broadcast with MAC address of the destination server's NIC. There is a helper script in debian repository just install the package and run `wakeonlan [MAC ADDRESS]` from any device in the network to boot the server. I also had to change the setting in Network Boot to NVMe to prevent my server from trying to PXE boot after WOL.
 
 # Main OS
 There are multiple options when it comes to choosing the root OS, one of the best options
