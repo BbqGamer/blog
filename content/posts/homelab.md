@@ -61,5 +61,12 @@ ps -A
 ```
 I can see `7` loaded units which all seem to be important and `98` processes running.
 
+## Disable suspend on lid close
+I would like my laptop-server to be running even when I close its lid. In order to do that
+we need to modify `/etc/systemd/logind.conf` file and add the line: `HandleLidSwitch=ingnore`.
+It works, additionally I observed that when I close the lid the screen turns off, but I
+suspect this is some hardware feature, rather than in OS, so I was happy that it working
+without needing to tweak anything else.
+
 
 
