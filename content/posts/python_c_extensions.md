@@ -1,5 +1,5 @@
 +++
-title = 'Rozszerzenie w C do Pythona'
+title = 'Rozszerzenia w C do Pythona'
 date = 2025-04-18T13:19:51+02:00
 draft = false
 +++
