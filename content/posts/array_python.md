@@ -1,7 +1,7 @@
 +++
 title = 'Rozszerzenie w C do Pythona'
 date = 2025-04-18T13:19:51+02:00
-draft = true
+draft = false
 +++
 Python jest znany z bardzo słabej wydajności, nie ma się czego dziwić gdyż jest
 on językiem interpretowalnym i jego celem nigdy nie było być najszybszym
@@ -95,6 +95,7 @@ W wyniku otrzymaliśmy funkcję która sumuje wszystkie elementy w liście. By m
 używać w Pythonie musimy zadeklarować że jest ona częścią modułu, przyda się także
 docstring który będzie widoczny gdy ktoś będzie przeglądał dokumentację.
 ```c
+// definiujemy docstringa
 PyDoc_STRVAR(sum_doc,
 "sum(list, /)\n--\n\n"
 "Return sum of a list"
@@ -115,4 +116,145 @@ By otrzymać dokumentację możemy w terminalu wpisać
 python3 -m pydoc qusort
 ```
 Lub po prostu `help(...)` w interpreterze.
+
+# Funkcja sort
+Wreszcie możemy się wziąć za implementację quicksorta. Zacznijmy od implementacji
+algorytmu na surowej liście liczb całkowitej bez przejmowania się typami Pythona.
+```c
+void swap(long *a, long* b) {
+    long tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+Py_ssize_t partition(long *arr, Py_ssize_t lo, Py_ssize_t hi) {
+    long mid = (lo + hi) / 2;
+    if (arr[mid] < arr[lo]) {
+        swap(&arr[mid], &arr[lo]);
+    }
+    if (arr[hi] < arr[lo]) {
+        swap(&arr[hi], &arr[lo]);
+    }
+    if (arr[mid] < arr[hi]) {
+        swap(&arr[mid], &arr[hi]);
+    }
+    
+    long tmp, pivot = arr[hi];
+    Py_ssize_t i, j; 
+    for (i = lo, j = lo; j < hi; j++) {
+        if(arr[j] <= pivot) {
+            swap(&arr[j], &arr[i])
+            i++;
+        }
+    }
+
+    swap(&arr[hi], &arr[i]);
+    return i;
+}
+
+void quicksort(long *arr, Py_ssize_t lo, Py_ssize_t hi) {
+    if (lo >= hi)
+        return;
+
+    Py_ssize_t p = partition(arr, lo, hi);
+
+    quicksort(arr, p + 1, hi);
+    quicksort(arr, lo, p - 1);
+}
+```
+Szczegóły na temat powyższej implementacji można znaleźć np na
+[wikipedii](https://en.wikipedia.org/wiki/Quicksort).
+
+Zajmijmy się teraz połączeniem tej funkcji z pythonem. Parsowanie argumentów
+robimy podobnie jak w poprzedniej funkcji (`sum`). Alokujemy miejsce na macierz
+*roboczą*, algorytm będzie działał dużo szybciej jeśli będziemy operować na
+macierzach z C zamiast wykorzystywać operacje z `PyList`, typu `PyList_GetItem`
+albo `PyList_SET_ITEM`, będą one nam tylko potrzebne do zczytania wartości w
+liście wejściowej i wypisanie ich do listy wyjściowej.
+```c
+PyDoc_STRVAR(sort_doc,
+"sort(list, /)\n--\n\n"
+"Sorts in place a list of integers.");
+
+static PyObject *sort(PyObject *self, PyObject *args) {
+
+  PyObject *input_list;
+
+  if (!PyArg_ParseTuple(args, "O!", &PyList_Type, &input_list)) {
+    return NULL;
+  }
+
+  Py_ssize_t size = PyList_Size(input_list);
+  long *sorted = malloc(sizeof(long) * size);
+
+  for (Py_ssize_t i = 0; i < size; i++) {
+      sorted[i] = PyLong_AsLong(PyList_GetItem(input_list, i));
+  }
+
+  quicksort(sorted, 0, size - 1);
+    
+  PyObject *output_list = PyList_New(size);
+  if (output_list == NULL)
+      return NULL;
+
+  for (Py_ssize_t i = 0; i < size; i++) {
+      PyObject *item = PyLong_FromLong(sorted[i]);
+      if (item == NULL) {
+          Py_DECREF(output_list);
+          return NULL;
+      }
+
+      PyList_SET_ITEM(output_list, i, item);
+  }
+  return output_list;
+}
+
+static PyMethodDef qusort_methods[] = {
+    {"sum", sum, METH_VARARGS, sum_doc},
+    {"sort", sort, METH_VARARGS, sort_doc}, // dodajemy kolejną funkcję do listy
+    {NULL, NULL, 0, NULL}};
+
+# Benchmark
+Funkcja sortująca działa, ale byłem ciekaw czy jest ona szybsza niż funkcja
+wbudowana w Pythona (`sorted`), oczywiście porównanie to nie jest do końca fair
+bo funkcja wbudowana działa niezależnie od tego jakie typy są w liście, a nasza
+lista działa tylko na liczbach całkowitych. Tak czy inaczej warto sprawdzić jak
+nam poszło, w tym celu napisałem krótki skrypt do benchmarku funkcji w pythonie.
+```python
+import random
+import time
+import qusort 
+from statistics import mean
+
+
+SIZES = [1000, 10_000, 100_000, 1_000_000, 5_000_000]
+REPEATS = 10
+for size in SIZES:
+    qusorts = []
+    sorteds = []
+    for _ in range(REPEATS):
+        arr = [random.randint(-10_000_000, 10_000_000) for _ in range(size)]
+
+        start = time.perf_counter()
+        A = qusort.sort(arr)
+        qusorts.append(time.perf_counter() - start)
+
+        start = time.perf_counter()
+        B = sorted(arr)
+        sorteds.append(time.perf_counter() - start)
+
+        assert A == B
+    print(f"Arr size: {size:8d}\tavg qsort = {mean(qusorts):.6f} s, avg sorted = {mean(sorteds):.6f} s")
+```
+Wyniki, były takie:
+```bash
+Arr size:     1000      avg qsort = 0.000078 s, avg sorted = 0.000070 s
+Arr size:    10000      avg qsort = 0.000920 s, avg sorted = 0.000915 s
+Arr size:   100000      avg qsort = 0.011651 s, avg sorted = 0.012594 s
+Arr size:  1000000      avg qsort = 0.139018 s, avg sorted = 0.223437 s
+Arr size:  5000000      avg qsort = 0.763253 s, avg sorted = 1.584413 s
+```
+Jak widać nasz algorytm był w stanie poprawić dość mocno czas sortowania dla większych
+instancji problemu, czyli pokazuje to że czasami napisanie jakiegoś konkretnego 
+rozwiązania pod nasz problem może być bardziej wydajne niż wbudowane rozwiązania.
 
