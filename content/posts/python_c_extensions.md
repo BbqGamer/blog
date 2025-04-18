@@ -213,7 +213,7 @@ static PyMethodDef qusort_methods[] = {
     {"sum", sum, METH_VARARGS, sum_doc},
     {"sort", sort, METH_VARARGS, sort_doc}, // dodajemy kolejną funkcję do listy
     {NULL, NULL, 0, NULL}};
-
+```
 # Benchmark
 Funkcja sortująca działa, ale byłem ciekaw czy jest ona szybsza niż funkcja
 wbudowana w Pythona (`sorted`), oczywiście porównanie to nie jest do końca fair
