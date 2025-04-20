@@ -37,7 +37,7 @@ PyMODINIT_FUNC PyInit_qusort(void) { return PyModule_Create(&qusort_methods); }
 ```
 Poniższa komenda pozwoli nam skompilować moduł:
 ```bash
-gcc qusort.c -fPIC -shared -o asort.so -I/usr/include/python3.11
+gcc qusort.c -O4 -fPIC -shared -o asort.so -I/usr/include/python3.11
 ```
 Powinniśmy w efekcie otrzymać plik `qusort.so` w formacie ELF, który jest naszym
 skompilowanym modułem, możemy przetestować czy działa w interpreterze pythona
@@ -248,11 +248,11 @@ for size in SIZES:
 ```
 Wyniki, były takie:
 ```bash
-Arr size:     1000      avg qsort = 0.000078 s, avg sorted = 0.000070 s
-Arr size:    10000      avg qsort = 0.000920 s, avg sorted = 0.000915 s
-Arr size:   100000      avg qsort = 0.011651 s, avg sorted = 0.012594 s
-Arr size:  1000000      avg qsort = 0.139018 s, avg sorted = 0.223437 s
-Arr size:  5000000      avg qsort = 0.763253 s, avg sorted = 1.584413 s
+Arr size:     1000      avg qsort = 0.000048 s, avg sorted = 0.000065 s
+Arr size:    10000      avg qsort = 0.000568 s, avg sorted = 0.000891 s
+Arr size:   100000      avg qsort = 0.008508 s, avg sorted = 0.014490 s
+Arr size:  1000000      avg qsort = 0.089242 s, avg sorted = 0.240599 s
+Arr size:  5000000      avg qsort = 0.485726 s, avg sorted = 1.543574 s
 ```
 Jak widać nasz algorytm był w stanie poprawić dość mocno czas sortowania dla większych
 instancji problemu, czyli pokazuje to że czasami napisanie jakiegoś konkretnego 
