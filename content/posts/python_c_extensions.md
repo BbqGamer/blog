@@ -258,3 +258,121 @@ Jak widać nasz algorytm był w stanie poprawić dość mocno czas sortowania dl
 instancji problemu, czyli pokazuje to że czasami napisanie jakiegoś konkretnego 
 rozwiązania pod nasz problem może być bardziej wydajne niż wbudowane rozwiązania.
 
+# Wielowątkowość
+Quicksort jest algorytmem typu dziel i rządź i świetnie nadaje się do parallelizacji.
+Chciałem zobaczyć jakie wyniki będę w stanie otrzymać na moim 16 wątkowym procesorze
+i wyniki okazały się być bardzo fajne.
+
+## Jak paralelizować quicksorta
+Jest na to kilka sposobów, ja zdecydowałem się że w każdym wykonaniu quicksorta
+rekurencyjne wywołanie quicksorta na części listy na lewo od pivota będzie odbywać się
+w tym samym wątku, a prawa strona w nowym wątku, z tym że tworzymy nowy wątek tylko
+jeśli nie istnieje już 16 wątków i lista jest wystarczająco długa żeby to miało sens.
+```c
+#include <pthread.h>
+#include <semaphore.h>
+...
+// lekka zmiana implementacji swapa dla uproszczenia kodu
+static inline void swap(long *arr, Py_ssize_t a, Py_ssize_t b) {
+    long tmp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = tmp;
+}
+
+// Dla uproszczenia zakładamy że lo zawsze jest 0 a n to indeks ostatniego elementu
+// arr to tylko wskaźnik więc można nim manipulować w funkcji quicksort
+Py_ssize_t partition(long *arr, Py_ssize_t n) {
+    long mid = n / 2;
+    if (arr[mid] < arr[0]) {
+        swap(arr, mid, 0);
+    }
+    if (arr[n] < arr[0]) {
+        swap(arr, n, 0);
+    }
+    if (arr[mid] < arr[n]) {
+        swap(arr, mid, n);
+    }
+
+    long tmp, pivot = arr[n];
+    Py_ssize_t i, j; 
+    for (i = 0, j = 0; j < n; j++) {
+        if(arr[j] <= pivot) {
+            swap(arr, j, i);
+            i++;
+        }
+    }
+
+    swap(arr, n, i);
+    return i;
+}
+
+// struktura do wrzucenia do funkcji quicksort (pthread tego wymaga)
+typedef struct {
+    long *arr;
+    Py_ssize_t n;
+    sem_t *sem;
+} QSArgs;
+
+#define PARALLEL_THRESHOLD 8196 // tylko twórz wątek jeśli macierz większa niż 8196
+#define MAX_THREADS 16
+
+void *quicksort(void* arg) {
+    QSArgs *args = arg;
+
+    if (args->n <= 0)
+        return NULL;
+
+    Py_ssize_t p = partition(args->arr, args->n);
+    
+    int s;
+    pthread_t thread = 0;
+    QSArgs rargs = { args->arr + p + 1, args->n - p - 1, args->sem };
+    if (p - 1 >= PARALLEL_THRESHOLD && sem_trywait(args->sem) != -1) {
+        s = pthread_create(&thread, NULL, quicksort, &rargs);
+        if (s != 0)
+            exit(1);
+    } else {
+        quicksort(&rargs);
+    }
+
+    QSArgs largs = { args->arr, p - 1, args->sem };
+    quicksort(&largs);
+
+    if (thread) {
+        s = pthread_join(thread, NULL);
+        if (s != 0)
+            exit(1);
+        sem_post(args->sem);
+    }
+}
+
+
+static PyObject *sort(PyObject *self, PyObject *args) {
+...
+  sem_t sem;
+  sem_init(&sem, 0, MAX_THREADS);
+  QSArgs qsargs = { sorted, size - 1, &sem };
+  quicksort(&qsargs);
+...
+}
+```
+Kompilujemy za pomocą:
+```bash
+gcc -Ofast -shared -fPIC \
+    $(python3-config --includes) -pthread \
+    qusort.c -o qusort.so 
+```
+W ten sposób byłem w stanie jeszcze bardziej przyśpieszyć quicksorta oto
+wyniki, dla róznych rozmiarów listy, `qsort` to wersja z wielowątkowością,
+możemy zauważyć dwukrotną poprawę dla dużych list:
+| algo  |  n = 10000 | n = 100000 | n = 1000000 | n = 5000000 | n = 50000000 |
+| ----  |  --------- | ---------- | ----------- | ----------- | ------------ |
+|sorted |  0.000891  | 0.014490   | 0.240599    |  1.543574   | 25.132971    |
+|qsort  |  0.000568  | 0.008508   | 0.089242    |  0.485726   |  4.911362     |
+|qsortmt|  0.000582  | 0.007438   | 0.056366    |  0.240699   |  2.358893    |
+
+**Tip** uruchom eksperyment z komendą nice żeby program miał dostęp do większej ilości
+czasu procesora:
+```bash
+sudo nice --100 python3 benchmark.py
+```
