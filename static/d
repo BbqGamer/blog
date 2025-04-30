@@ -1,3 +1,4 @@
+echo "Downloading dotfiles"
 wget https://raw.githubusercontent.com/BbqGamer/dots/refs/heads/master/.bashrc -O ~/.bashrc
 wget 
 https://raw.githubusercontent.com/BbqGamer/dots/refs/heads/master/.vimrc
