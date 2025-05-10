@@ -59,5 +59,11 @@ debianie 12 trzeba zainstalować pakiet: `zlib1g-dev1` a header znajdzie się w
 /usr/include/zlib.h). Funkcja `deflate`, kompresuje bufor zaś `inflate`
 dekompresuje go, na polski można o tym myśleć jak o spuszczaniu powietrza z
 balona lub nadmuchiwanie go z powrotem, gdzie poziom kompresji odpowiada ilości
-powietrza w balonie. Poniżej prosty przykład jak użyć bilbioteki w praktyce.
+powietrza w balonie.
+
+# DEFLATE
+## LZ77
+Z tego co rozumiem, wszystkie najpopularniejsze algorytmy kompresji po spodem
+używaja algorytmu LZ77 (Lempel-Ziv), [Ciekawy filmik od google tłumaczący
+dlaczego](https://www.youtube.com/watch?v=Jqc418tQDkg&t=3s)
 
