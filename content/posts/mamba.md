@@ -163,6 +163,8 @@ keeps hot data close to compute units:
 Below is the model architecture diagram taken from the original paper that
 nicely connects most of the concepts that we talked about in this blogpost.
 ![The Mamba Architecture](/mamba.png)
+Albert Gu and Tri Dao.  2024.  Mamba: Linear-Time Sequence Modeling with 
+Selective State Spaces. In *First Conference on Language Modeling*.
 
 # Conclusions
 Mamba represents a middle ground between Transformers and RNNs.
