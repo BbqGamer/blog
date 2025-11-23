@@ -1,17 +1,14 @@
-# Sample workflow for building and deploying a Hugo site to GitHub Pages
-name: Deploy Hugo site to Pages
+name: Deploy Hugo PaperMod Demo to Pages
 
 on:
   push:
+    paths-ignore:
+      - "images/**"
+      - "LICENSE"
+      - "README.md"
     branches:
       - master
-    paths:
-      - 'archetypes/**'
-      - 'content/**'
-      - 'layouts/**'
-      - 'themes/**'
-      - 'static/**'
-      - 'hugo.yaml'
+      - exampleSite
   workflow_dispatch:
     # manual run
     inputs:
