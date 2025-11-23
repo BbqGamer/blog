@@ -1,5 +1,5 @@
 +++
-title = 'Engineer's guide to Exchange Traded Funds'
+title = "Engineer's guide to Exchange Traded Funds"
 date = 2025-11-23T20:58:00+01:00
 draft = true
 +++
@@ -15,4 +15,3 @@ Pseudocode with callbacks like:
 - start of the day
 - end of the day
 - ETF creation
-
