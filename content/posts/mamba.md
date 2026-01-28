@@ -11,14 +11,12 @@ Modeling with Selective State Spaces](https://arxiv.org/abs/2312.00752), which
 introduced a  neural network architecture that bridges the gap between RNNs and
 Transformers.
 
-The authors: [Albert
+The authors are: [Albert
 Gu](https://scholar.google.com/citations?hl=en&user=DVCHv1kAAAAJ) and [Tri
-Dao](https://scholar.google.com/citations?user=NQRw0bQAAAAJ&hl=en&oi=ao), are
-well-known for their contributions to the
-[FlashAttention](https://arxiv.org/abs/2205.14135), which significantly
+Dao](https://scholar.google.com/citations?user=NQRw0bQAAAAJ&hl=en&oi=ao). Albert
+worked [FlashAttention](https://arxiv.org/abs/2205.14135), which significantly
 improved Transformer efficiency and have been widely adopted in all prominent
-deep learning libraries. These researchers clearly have deep experience in
-optimizing large sequence models.
+deep learning libraries .
 
 # Motivation
 In the paper authors argue that: 
