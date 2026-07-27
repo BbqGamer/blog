@@ -19,6 +19,7 @@ outputs:
 
 params:
   description: "Mój techniczny blog"
+  author: "Adam Korba"
   defaultTheme: auto
   displayFullLangName: true
   ShowPostNavLinks: true
