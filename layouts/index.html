@@ -1,0 +1,64 @@
+{{ define "main" }}
+<div class="business-landing">
+  <section class="landing-hero" aria-labelledby="landing-title">
+    <p class="landing-eyebrow">Adam Korba · AI & software development</p>
+    <h1 id="landing-title">AI, które pracuje<br>na Twój biznes.</h1>
+    <p class="landing-intro">Wdrażam AI w firmach i tworzę aplikacje z funkcjami sztucznej inteligencji. Łączę programowanie, agentów AI i automatyzacje n8n, żeby usprawnić codzienną pracę Twojego zespołu.</p>
+    <div class="landing-actions">
+      <a class="landing-button" href="mailto:adam@akorba.pl">Porozmawiajmy o Twoim projekcie <span aria-hidden="true">↗</span></a>
+      <a class="landing-text-link" href="#uslugi">Zobacz, w czym pomagam <span aria-hidden="true">↓</span></a>
+    </div>
+    <p class="landing-note">Od pomysłu i wyboru technologii po działające wdrożenie.</p>
+  </section>
+
+  <section class="landing-section" id="uslugi" aria-labelledby="services-title">
+    <p class="landing-eyebrow">Usługi</p>
+    <h2 id="services-title">Technologia dopasowana do Twoich procesów.</h2>
+    <div class="landing-grid">
+      <article class="landing-card">
+        <span class="landing-number" aria-hidden="true">01 / AI w firmie</span>
+        <h3>Wdrożenia AI</h3>
+        <p>Pomagam wybrać procesy, w których AI ma sens, dobrać narzędzia i połączyć je z firmowymi systemami. Zaczynam od konkretnego problemu, nie od technologii.</p>
+      </article>
+      <article class="landing-card">
+        <span class="landing-number" aria-hidden="true">02 / Aplikacje</span>
+        <h3>Programowanie z AI</h3>
+        <p>Tworzę aplikacje i rozbudowuję istniejące produkty o funkcje AI — od pracy z dokumentami i wyszukiwania wiedzy po asystentów wspierających użytkowników.</p>
+      </article>
+      <article class="landing-card">
+        <span class="landing-number" aria-hidden="true">03 / Agenci</span>
+        <h3>Agenci AI</h3>
+        <p>Wdrażam agentów korzystających z firmowej wiedzy i narzędzi. Projektuję ich zadania, uprawnienia i miejsca, w których decyzję powinien zatwierdzić człowiek.</p>
+      </article>
+      <article class="landing-card">
+        <span class="landing-number" aria-hidden="true">04 / Automatyzacja</span>
+        <h3>n8n i integracje</h3>
+        <p>Łączę aplikacje, API i modele AI w automatyczne przepływy pracy. Ograniczam ręczne przenoszenie danych i powtarzalne zadania między systemami.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="landing-section" aria-labelledby="process-title">
+    <p class="landing-eyebrow">Współpraca</p>
+    <h2 id="process-title">Od potrzeby do rozwiązania.</h2>
+    <ol class="landing-steps">
+      <li><h3>Rozmowa i zakres</h3><p>Poznaję Twój proces, dostępne dane i cel. Ustalamy, co warto zbudować i po czym poznamy, że działa.</p></li>
+      <li><h3>Prototyp i weryfikacja</h3><p>Sprawdzamy rozwiązanie na rzeczywistych przykładach, zanim przejdziemy do pełnego wdrożenia.</p></li>
+      <li><h3>Wdrożenie i integracja</h3><p>Łączę rozwiązanie z Twoimi narzędziami i przygotowuję je do codziennej pracy zespołu.</p></li>
+    </ol>
+  </section>
+
+  <section class="landing-contact" id="kontakt" aria-labelledby="contact-title">
+    <p class="landing-eyebrow">Kontakt</p>
+    <h2 id="contact-title">Co możemy usprawnić w Twojej firmie?</h2>
+    <p>Napisz, nad czym pracujesz lub jaki proces chcesz zautomatyzować. Ustalimy dobry punkt wyjścia.</p>
+    <a class="landing-email" href="mailto:adam@akorba.pl">adam@akorba.pl <span aria-hidden="true">↗</span></a>
+    <div class="landing-company"><span>Adam Korba</span><span>NIP: 7822971911</span></div>
+  </section>
+
+  <aside class="landing-blog" aria-label="Blog techniczny">
+    <div><h2>Od strony technicznej</h2><p>Piszę też o programowaniu i technologii.</p></div>
+    <a class="landing-text-link" href="{{ "posts/" | relURL }}">Przejdź do bloga <span aria-hidden="true">→</span></a>
+  </aside>
+</div>
+{{ end }}

@@ -1,15 +1,26 @@
 baseURL: https://akorba.pl/
-title: Tech Blog
+title: Adam Korba | Wdrożenia AI i aplikacje
 theme: PaperMod
 languageCode: pl-PL
+defaultContentLanguage: pl
 
 menu:
   main:
-    - name: Search
-      url: search/
-    - name: Tags
-      url: tags/
+    - name: Usługi
+      url: /#uslugi
       weight: 10
+    - name: Blog
+      url: posts/
+      weight: 20
+    - name: Szukaj
+      url: search/
+      weight: 30
+    - name: Tagi
+      url: tags/
+      weight: 40
+    - name: Kontakt
+      url: /#kontakt
+      weight: 50
 
 outputs:
   home:
@@ -18,7 +29,9 @@ outputs:
     - JSON
 
 params:
-  description: "Mój techniczny blog"
+  description: "Wdrażam AI w firmach, tworzę aplikacje z funkcjami AI, agentów i automatyzacje n8n. Adam Korba — porozmawiajmy o Twoim projekcie."
+  label:
+    text: "Adam Korba"
   author: "Adam Korba"
   defaultTheme: auto
   displayFullLangName: true
