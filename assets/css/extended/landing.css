@@ -20,8 +20,23 @@
     text-transform: uppercase;
 }
 
+.landing-hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    align-items: center;
+    gap: 32px;
+}
+
+.landing-portrait {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
 .landing-hero h1 {
-    font-size: clamp(36px, 7vw, 60px);
+    font-size: clamp(36px, 6vw, 48px);
     line-height: 1.1;
     letter-spacing: -.045em;
 }
@@ -192,6 +207,16 @@
 
     .landing-hero {
         padding-top: 36px;
+    }
+
+    .landing-hero-layout {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .landing-portrait-frame {
+        width: 200px;
+        justify-self: center;
     }
 
     .landing-intro {

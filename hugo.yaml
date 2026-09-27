@@ -15,9 +15,13 @@ menu:
     - name: Szukaj
       url: search/
       weight: 30
+      params:
+        hideOnHome: true
     - name: Tagi
       url: tags/
       weight: 40
+      params:
+        hideOnHome: true
     - name: Kontakt
       url: /#kontakt
       weight: 50
