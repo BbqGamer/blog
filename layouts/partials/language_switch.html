@@ -1,7 +1,7 @@
 {{- $page := . -}}
 <ul class="lang-switch" aria-label="{{ if eq .Lang "pl" }}Język{{ else }}Language{{ end }}">
     <li aria-hidden="true">|</li>
-    {{- range hugo.Sites }}
+    {{- range site.Sites }}
         {{- $lang := .Language.Lang }}
         {{- $target := .Home }}
         {{- $fallback := false }}
