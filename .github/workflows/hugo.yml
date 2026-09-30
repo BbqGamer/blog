@@ -14,6 +14,7 @@ on:
       - 'themes/**'
       - 'static/**'
       - 'hugo.yaml'
+      - '.github/workflows/hugo.yml'
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -60,9 +61,8 @@ jobs:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
         run: |
-          hugo \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+          # Use the HTTPS baseURL from hugo.yaml for all generated metadata.
+          hugo --minify
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
