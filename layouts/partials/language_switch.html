@@ -1,0 +1,26 @@
+{{- $page := . -}}
+<ul class="lang-switch" aria-label="{{ if eq .Lang "pl" }}Język{{ else }}Language{{ end }}">
+    <li aria-hidden="true">|</li>
+    {{- range hugo.Sites }}
+        {{- $lang := .Language.Lang }}
+        {{- $target := .Home }}
+        {{- $fallback := false }}
+        {{- $label := .Language.LanguageName }}
+        {{- with where $page.AllTranslations "Lang" $lang }}
+            {{- $target = index . 0 }}
+        {{- else }}
+            {{- with .GetPage "/posts" }}{{ $target = . }}{{ end }}
+            {{- $fallback = true }}
+            {{- if eq $page.Lang "pl" }}
+                {{- $label = printf "%s — brak tłumaczenia; przejdź do bloga" $label }}
+            {{- else }}
+                {{- $label = printf "%s — no translation available; go to the blog" $label }}
+            {{- end }}
+        {{- end }}
+    <li>
+        <a href="{{ $target.RelPermalink }}?lang={{ $lang }}" hreflang="{{ $lang }}" lang="{{ $lang }}"
+            title="{{ $label }}" aria-label="{{ $label }}"
+            {{ if eq $page.Lang $lang }}aria-current="true"{{ end }}>{{ upper $lang }}{{ if $fallback }} (blog){{ end }}</a>
+    </li>
+    {{- end }}
+</ul>

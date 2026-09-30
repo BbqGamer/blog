@@ -1,5 +1,6 @@
 +++
 title = 'MetaWeighting paper overview'
+aliases = ['../../../posts/meta_weighting/']
 date = 2026-01-07T21:40:33+01:00
 draft = false
 math = true

@@ -4,27 +4,60 @@ theme: PaperMod
 languageCode: pl-PL
 defaultContentLanguage: pl
 
-menu:
-  main:
-    - name: Usługi
-      url: /#uslugi
-      weight: 10
-    - name: Blog
-      url: posts/
-      weight: 20
-    - name: Szukaj
-      url: search/
-      weight: 30
-      params:
-        hideOnHome: true
-    - name: Tagi
-      url: tags/
-      weight: 40
-      params:
-        hideOnHome: true
-    - name: Kontakt
-      url: /#kontakt
-      weight: 50
+languages:
+  pl:
+    languageName: Polski
+    languageCode: pl-PL
+    weight: 1
+    menu:
+      main:
+        - name: Usługi
+          url: /#uslugi
+          weight: 10
+        - name: Blog
+          url: /posts/
+          weight: 20
+        - name: Szukaj
+          url: /search/
+          weight: 30
+          params:
+            hideOnHome: true
+        - name: Tagi
+          url: /tags/
+          weight: 40
+          params:
+            hideOnHome: true
+        - name: Kontakt
+          url: /#kontakt
+          weight: 50
+  en:
+    languageName: English
+    languageCode: en-GB
+    title: Adam Korba | AI Implementation & Software Development
+    weight: 2
+    params:
+      description: "AI implementation, AI-powered applications, AI agents and n8n automation for your business. Adam Korba — let's discuss your project."
+    menu:
+      main:
+        - name: Services
+          url: /en/#uslugi
+          weight: 10
+        - name: Blog
+          url: /en/posts/
+          weight: 20
+        - name: Search
+          url: /en/search/
+          weight: 30
+          params:
+            hideOnHome: true
+        - name: Tags
+          url: /en/tags/
+          weight: 40
+          params:
+            hideOnHome: true
+        - name: Contact
+          url: /en/#kontakt
+          weight: 50
 
 outputs:
   home:

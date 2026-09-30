@@ -9,6 +9,7 @@ on:
       - 'archetypes/**'
       - 'assets/**'
       - 'content/**'
+      - 'data/**'
       - 'layouts/**'
       - 'themes/**'
       - 'static/**'
