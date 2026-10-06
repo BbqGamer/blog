@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="landing-actions">
-      <a class="landing-button" href="mailto:kontakt@akorba.pl">{{ $copy.cta }} <span aria-hidden="true">↗</span></a>
+      <a class="landing-button" href="mailto:{{ $copy.email }}">{{ $copy.cta }} <span aria-hidden="true">↗</span></a>
       <a class="landing-text-link" href="#uslugi">{{ $copy.explore }} <span aria-hidden="true">↓</span></a>
     </div>
     <p class="landing-note">{{ $copy.note }}</p>
@@ -48,7 +48,7 @@
     <h2 id="contact-title">{{ $copy.contactTitle }}</h2>
     <p>{{ $copy.contactText }}</p>
     <p>{{ $copy.cooperationText }}</p>
-    <a class="landing-email" href="mailto:kontakt@akorba.pl">kontakt@akorba.pl <span aria-hidden="true">↗</span></a>
+    <a class="landing-email" href="mailto:{{ $copy.email }}">{{ $copy.email }} <span aria-hidden="true">↗</span></a>
     <div class="landing-company"><span>Adam Korba</span><span>{{ $copy.taxLabel }}: 7822971911</span></div>
   </section>
 
